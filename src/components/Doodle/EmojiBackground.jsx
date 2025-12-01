@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./EmojiBAckground.css";
+import "./EmojiBackground.css";
 const EmojiBackground = (total = 80, emojiType = 1) => {
   const [emojis, setEmojis] = useState([]);
   const emojiSet = [
