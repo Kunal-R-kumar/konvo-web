@@ -3,13 +3,14 @@ import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBUAAQJtPdQ0oBuQMNiKd8jOQnfM3Dmsn8",
-  authDomain: "konvo-kunal.firebaseapp.com",
-  databaseURL: "https://konvo-kunal-default-rtdb.firebaseio.com",
-  projectId: "konvo-kunal",
-  messagingSenderId: "583752961105",
-  appId: "1:583752961105:web:ab5e0d63bd2a0fbf013c70",
-  measurementId: "G-D4BEDSJWS3",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  databaseURL: import.meta.env.VITE_DATABASE_URL,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+  // storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
 };
 
 const app = initializeApp(firebaseConfig);
