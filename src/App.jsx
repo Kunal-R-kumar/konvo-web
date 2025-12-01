@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
+import Setup from "./Auth/Setup";
+import ChatWindow from "./components/ChatWindow/ChatWindow";
+import EmojiBackground from "./components/Doodle/EmojiBackground";
+import ForgetPassword from "./Auth/ForgetPassword";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const App = () => {
+  const { user } = useContext(AuthContext);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      {/* Background only when user not logged in */}
+      {!user && <EmojiBackground />}
 
-export default App
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <ChatWindow /> : <Navigate to="/setup" />}
+          />
+          <Route
+            path="/setup"
+            element={!user ? <Setup /> : <Navigate to="/" />}
+          />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+        </Routes>
+      </BrowserRouter>
+
+      {/* Toast Notifications */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        closeButton={false}
+        newestOnTop={false}
+        theme="dark"
+        pauseOnHover
+        closeOnClicks
+      />
+    </>
+  );
+};
+
+export default App;

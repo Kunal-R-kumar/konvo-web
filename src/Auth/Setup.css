@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+}
+.setup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  overflow: hidden;
+  background: none;
+}
+
+.setup-box,
+.central-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 9px 12px 20px 0px var(--shadow-color);
+  border: 1.5px groove #c4c4c4;
+  width: 350px;
+  text-align: center;
+  align-content: center;
+}
+
+.setup-form input,
+.otp-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--button-hover-color);
+}
+/* Phone Login Page */
+.phoneInput {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+.otp-inputs {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.otp-inputs input {
+  width: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.form-heading {
+  font-family: var(--font-stylish-normal);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.link {
+  font-style: italic;
+  color: var(--link-color);
+}
+.link:hover {
+  cursor: pointer;
+}
+.password-group {
+  position: relative;
+}
+
+.eye-icon {
+  align-self: center;
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+  transition: 0.2s ease-in-out;
+}
+
+.eye-icon:hover {
+  opacity: 0.7;
+  color: var(--prima);
+}
+.actual_eye_icon {
+  width: 20px;
+  height: 20px;
+}
+/* Email Login Page */
+
+.forgot-password {
+  /* forget password link section */
+  width: fit-content;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  margin-bottom: 10px;
+}
+.options {
+  display: flex;
+  justify-content: flex-end;
+}
+/* Forget Password Page*/
+.back-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  color: var(--button-color);
+}
+.back-option:hover {
+  cursor: pointer;
+  color: var(--blwd);
+}
+.forget-password-note {
+  font-size: small;
+}
