@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { signInWithCustomToken } from "firebase/auth";
 import { auth } from "../Firebase/firebase";
 const PhoneLogin = () => {
-  const ip_and_port = "http://192.168.31.189:5000";
+  const ip_and_port = "https://backend-bxhi.onrender.com/";
   const [step, setStep] = useState(1); // 1: enter phone, 2: enter OTP
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]); // 6-digit OTP
