@@ -22,7 +22,9 @@ const EmailLogin = () => {
     setLoading(true); // 🔥 Start loader state
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const trimmedEmail = email.trim();
+      const trimmedPassword = password.trim();
+      await signInWithEmailAndPassword(auth, trimmedEmail, trimmedPassword);
 
       toast.success("Login Successful 🎉");
 
