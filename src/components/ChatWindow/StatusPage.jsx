@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function StatusPage() {
-  return <div>StatusPage</div>;
+  return <div className="pages-actual-content">StatusPage</div>;
 }

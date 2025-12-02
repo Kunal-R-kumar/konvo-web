@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function ArchivePage() {
-  return <div>ArchivePage</div>;
+  return <div className="pages-actual-content">ArchivePage</div>;
 }

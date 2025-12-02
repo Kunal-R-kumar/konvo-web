@@ -43,7 +43,7 @@ const SideMenuBar = () => {
       <div className="menu-top">
         {!isMobile && (
           <div
-            className={`menu-item-top hamburger ${open ? "active" : ""}`}
+            className={`menu-item-top hamburger ${open ? "active" : ""} `}
             onClick={handleMenuToggle}
           >
             <span></span>
@@ -51,30 +51,57 @@ const SideMenuBar = () => {
             <span></span>
           </div>
         )}
-        <div className="menu-item-top menu-item" onClick={handleShowChats}>
+        <div
+          className={`menu-item-top menu-item ${
+            activeTab === "Chats" ? "ActivatedMenu" : ""
+          }`}
+          onClick={handleShowChats}
+        >
           <PiChats />
           {(open || isMobile) && "Chats"}
         </div>
-        <div className="menu-item-top menu-item" onClick={handleShowStatus}>
+        <div
+          className={`menu-item-top menu-item ${
+            activeTab === "Status" ? "ActivatedMenu" : ""
+          }`}
+          onClick={handleShowStatus}
+        >
           <TbTopologyStarRing3 />
           {(open || isMobile) && "Status"}
         </div>
-        <div className="menu-item-top menu-item" onClick={handleShowCalls}>
+        <div
+          className={`menu-item-top menu-item ${
+            activeTab === "Calls" ? "ActivatedMenu" : ""
+          }`}
+          onClick={handleShowCalls}
+        >
           <MdOutlineCall /> {(open || isMobile) && "Calls"}
         </div>
-        <div className="menu-item-bottom menu-item" onClick={handleShowArchive}>
+        <div
+          className={`menu-item-top menu-item ${
+            activeTab === "Archive" ? "ActivatedMenu" : ""
+          }`}
+          onClick={handleShowArchive}
+        >
           <HiOutlineArchiveBoxArrowDown /> {(open || isMobile) && "Archive"}
         </div>
       </div>
       <div className="menu-bottom">
         <div
-          className="menu-item-bottom menu-item"
+          className={`menu-item-bottom menu-item ${
+            activeTab === "Settings" ? "ActivatedMenu" : ""
+          }`}
           onClick={handleShowSettings}
         >
           <IoIosSettings /> {(open || isMobile) && "Settings"}
         </div>
-        <div className="menu-item-bottom menu-item" onClick={handleShowProfile}>
-          <CgProfile /> {(open || isMobile) && "Profile"}{" "}
+        <div
+          className={`menu-item-bottom menu-item ${
+            activeTab === "Profile" ? "ActivatedMenu" : ""
+          }`}
+          onClick={handleShowProfile}
+        >
+          <CgProfile /> {(open || isMobile) && "Profile"}
         </div>
       </div>
     </div>

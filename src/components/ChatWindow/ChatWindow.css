@@ -65,6 +65,24 @@
   transform: scale(1.2);
   color: var(--base-color);
 }
+.ActivatedMenu {
+  border-radius: 10px;
+  background-color: var(--base-color);
+  transition: all 0.4s ease;
+}
+.ActivatedMenu:hover {
+  color: var(--text-color);
+}
+/* Pages Section  */
+.pages-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.pages-actual-content {
+  display: flex;
+  flex: 1;
+}
 
 /* Chat List Section */
 .chat-list-section {
@@ -93,6 +111,23 @@
   font-style: italic;
   font-weight: 400;
   color: var(--text-color);
+}
+.navbar-rightmost-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.theme-btn {
+  width: fit-content;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: transform 0.3s ease;
+}
+.theme-btn.inverted {
+  transform: scaleX(-1);
 }
 /* Chat List Items */
 .chat-list {
@@ -176,7 +211,7 @@
 
 .chat-header .menu-btn,
 .chat-header .back-btn,
-.chatlist-navbar .menu-btn {
+.navbar-rightmost-area .menu-btn {
   width: fit-content;
   background: none;
   border: none;
@@ -349,8 +384,3 @@
 .scroll-btn.bottom {
   bottom: 50px;
 } */
-.pages-section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
