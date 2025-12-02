@@ -36,6 +36,7 @@
   --side-menubar-color: #f6f9ff;
   --chatlist-color: #ffffff;
   --chatlist-hover-bg:#f6f5f4;
+  --activated-color:#e5ddd5;
   /* --chatlist-hover-bg:#f3f3f3; */
 
 }
@@ -63,6 +64,8 @@
   --side-menubar-color: #0e1418;
   --chatlist-color: #ffffff;
   --chatlist-hover-bg:#131b1f;
+  --activated-color:#e5ddd5;
+
 }
 
 /* Apply variables */

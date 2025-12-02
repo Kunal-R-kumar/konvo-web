@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { UIContext } from "../../context/UIContext";
-import avatar from "../../../src/assets/images/avatar.png";
+import { UIContext } from "../../../context/UIContext";
+import avatar from "../../../assets/images/avatar.png";
 const dummyUsers = [
   { id: 1, name: "Amit", img: avatar },
   { id: 2, name: "Karan", img: avatar },
@@ -34,21 +34,23 @@ const dummyUsers = [
   { id: 30, name: "Lina", img: avatar },
 ];
 
-const ChatList = () => {
-  const { setActiveChat } = useContext(UIContext);
+const StatusList = () => {
+  const { setActiveStatus } = useContext(UIContext);
 
   return (
-    <div className="chat-list">
+    <div className="status-list">
       {dummyUsers.map((user) => (
         <div
           key={user.id}
-          className="chat-user"
-          onClick={() => setActiveChat(user)}
+          className="status-user"
+          onClick={() => setActiveStatus(user)}
         >
-          <img src={user.img} alt={user.name} className="profile-pic" />
-          <div className="profile-list-info">
-            <span className="profile-list-info-name">{user.name}</span>
-            <span className="profile-list-info-name">{"Tap to chat"}</span>
+          <img src={user.img} alt={user.name} className="status-pic" />
+          <div className="status-profile-list-info">
+            <span className="status-profile-list-info-name">{user.name}</span>
+            <span className="status-profile-list-info-name">
+              {"Tap to See Status"}
+            </span>
           </div>
         </div>
       ))}
@@ -56,4 +58,4 @@ const ChatList = () => {
   );
 };
 
-export default ChatList;
+export default StatusList;

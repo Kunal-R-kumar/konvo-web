@@ -4,7 +4,7 @@ import { AuthContext } from "./context/AuthContext";
 import { UIProvider } from "./context/UIContext"; // added UIProvider
 
 import Setup from "./Auth/Setup";
-import ChatWindow from "./components/ChatWindow/ChatWindow";
+import MainWindow from "./components/MainWindow/MainWindow";
 import EmojiBackground from "./components/Doodle/EmojiBackground";
 import ForgetPassword from "./Auth/ForgetPassword";
 import { ToastContainer } from "react-toastify";
@@ -22,7 +22,7 @@ const App = () => {
           {/* Main Chat Window - Protected Route */}
           <Route
             path="/"
-            element={user ? <ChatWindow /> : <Navigate to="/setup" />}
+            element={user ? <MainWindow /> : <Navigate to="/setup" />}
           />
           {/* Setup Page - Redirect if already logged in */}
           <Route

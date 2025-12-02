@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UIContext } from "../../context/UIContext";
+import { UIContext } from "../../../context/UIContext";
 import { IoIosArrowBack } from "react-icons/io";
 
 const ChatHeader = () => {

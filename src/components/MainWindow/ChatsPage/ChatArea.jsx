@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useRef } from "react";
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 import MessageInput from "./MessageInput";
-import { UIContext } from "../../context/UIContext";
-import ScrollControls from "./ScrollControls";
+import { UIContext } from "../../../context/UIContext";
+import ScrollControls from "../ScrollControls";
 import "./ChatWindow.css";
 
 const ChatArea = () => {

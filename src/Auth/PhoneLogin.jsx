@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useNavigate } from "react-router-dom";
-import ChatWindow from "../components/ChatWindow/ChatWindow";
 import { toast } from "react-toastify";
 import { signInWithCustomToken } from "firebase/auth";
 import { auth } from "../Firebase/firebase";

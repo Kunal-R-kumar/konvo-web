@@ -4,6 +4,7 @@ export const UIContext = createContext();
 
 export const UIProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState(null);
+  const [activeStatus, setActiveStatus] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState("Chats");
 
@@ -19,7 +20,15 @@ export const UIProvider = ({ children }) => {
 
   return (
     <UIContext.Provider
-      value={{ activeChat, setActiveChat, isMobile, activeTab, setActiveTab }}
+      value={{
+        activeChat,
+        setActiveChat,
+        isMobile,
+        activeTab,
+        setActiveTab,
+        activeStatus,
+        setActiveStatus,
+      }}
     >
       {children}
     </UIContext.Provider>

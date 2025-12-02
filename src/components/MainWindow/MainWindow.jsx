@@ -1,23 +1,25 @@
 import { useContext } from "react";
-import ChatHeader from "./ChatHeader";
-import Messages from "./Messages";
-import MessageInput from "./MessageInput";
+import ChatHeader from "./ChatsPage/ChatHeader";
+import StatusHeader from "./StatusPage/StatusHeader";
+import Messages from "./ChatsPage/Messages";
+import MessageInput from "./ChatsPage/MessageInput";
 import SideMenuBar from "./SideMenuBar";
-import ChatList from "./ChatList";
-import ChatListNavbar from "./ChatListNavbar";
-import StatusPage from "./StatusPage";
-import CallsPage from "./CallsPage";
-import ArchivePage from "./ArchivePage";
-import SettingsPage from "./SettingsPage";
-import ProfilePage from "./ProfilePage";
+import ChatList from "./ChatsPage/ChatList";
+import MainListNavbar from "./MainListNavbar";
+import StatusList from "./StatusPage/StatusList";
+import CallsPage from "./CallsPage/CallsPage";
+import ArchivePage from "./ArchivePage/ArchivePage";
+import SettingsPage from "./SettingsPage/SettingsPage";
+import ProfilePage from "./ProfilePage/ProfilePage";
 import { UIContext } from "../../context/UIContext";
 
-import "./ChatWindow.css";
-const ChatWindow = () => {
-  const { activeChat, isMobile, activeTab } = useContext(UIContext);
+import "./MainWindow.css";
+const MainWindow = () => {
+  const { activeChat, isMobile, activeTab, activeStatus } =
+    useContext(UIContext);
 
   return (
-    <div className="chat-window">
+    <div className="main-window">
       {/* Chats Tab */}
       {activeTab === "Chats" && (
         <>
@@ -25,14 +27,14 @@ const ChatWindow = () => {
             <>
               <SideMenuBar />
               <div className="chat-list-section">
-                <ChatListNavbar />
+                <MainListNavbar />
                 <ChatList />
               </div>
             </>
           )}
           {isMobile && !activeChat && (
             <div className="chat-list-section">
-              <ChatListNavbar />
+              <MainListNavbar />
               <ChatList />
               <SideMenuBar />
             </div>
@@ -47,22 +49,31 @@ const ChatWindow = () => {
         </>
       )}
       {/* Status Tab */}
-      {activeTab === "Status" && !isMobile && (
+      {activeTab === "Status" && (
         <>
-          <SideMenuBar />
-          <div className="pages-section">
-            <ChatListNavbar />
-            <StatusPage />
-          </div>
-        </>
-      )}
-      {activeTab === "Status" && isMobile && (
-        <>
-          <div className="pages-section">
-            <ChatListNavbar />
-            <StatusPage />
-            <SideMenuBar />
-          </div>
+          {!isMobile && (
+            <>
+              <SideMenuBar />
+              <div className="status-list-section">
+                <MainListNavbar />
+                <StatusList />
+              </div>
+            </>
+          )}
+          {isMobile && !activeStatus && (
+            <div className="status-list-section">
+              <MainListNavbar />
+              <StatusList />
+              <SideMenuBar />
+            </div>
+          )}
+          {activeStatus && (
+            <div className="status-area-section">
+              <StatusHeader />
+              <Messages />
+              <MessageInput />
+            </div>
+          )}
         </>
       )}
       {/* Calls Tab */}
@@ -70,7 +81,7 @@ const ChatWindow = () => {
         <>
           <SideMenuBar />
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <CallsPage />
           </div>
         </>
@@ -78,7 +89,7 @@ const ChatWindow = () => {
       {activeTab === "Calls" && isMobile && (
         <>
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <CallsPage />
             <SideMenuBar />
           </div>
@@ -89,7 +100,7 @@ const ChatWindow = () => {
         <>
           <SideMenuBar />
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <ArchivePage />
           </div>
         </>
@@ -97,7 +108,7 @@ const ChatWindow = () => {
       {activeTab === "Archive" && isMobile && (
         <>
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <ArchivePage />
             <SideMenuBar />
           </div>
@@ -108,7 +119,7 @@ const ChatWindow = () => {
         <>
           <SideMenuBar />
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <SettingsPage />
           </div>
         </>
@@ -116,7 +127,7 @@ const ChatWindow = () => {
       {activeTab === "Settings" && isMobile && (
         <>
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <SettingsPage />
             <SideMenuBar />
           </div>
@@ -127,7 +138,7 @@ const ChatWindow = () => {
         <>
           <SideMenuBar />
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <ProfilePage />
           </div>
         </>
@@ -135,7 +146,7 @@ const ChatWindow = () => {
       {activeTab === "Profile" && isMobile && (
         <>
           <div className="pages-section">
-            <ChatListNavbar />
+            <MainListNavbar />
             <ProfilePage />
             <SideMenuBar />
           </div>
@@ -144,4 +155,4 @@ const ChatWindow = () => {
     </div>
   );
 };
-export default ChatWindow;
+export default MainWindow;
