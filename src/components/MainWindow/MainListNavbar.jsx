@@ -1,6 +1,6 @@
 import { MdInvertColors } from "react-icons/md";
 import { useState } from "react";
-const ChatListNavbar = () => {
+const MainListNavbar = () => {
   const [inverted, setInverted] = useState(false);
 
   const handleInversion = () => {
@@ -23,4 +23,4 @@ const ChatListNavbar = () => {
   );
 };
 
-export default ChatListNavbar;
+export default MainListNavbar;

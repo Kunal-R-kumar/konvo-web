@@ -14,6 +14,7 @@ import ProfilePage from "./ProfilePage/ProfilePage";
 import { UIContext } from "../../context/UIContext";
 
 import "./MainWindow.css";
+import ChatArea from "./ChatsPage/ChatArea";
 const MainWindow = () => {
   const { activeChat, isMobile, activeTab, activeStatus } =
     useContext(UIContext);
@@ -71,7 +72,6 @@ const MainWindow = () => {
             <div className="status-area-section">
               <StatusHeader />
               <Messages />
-              <MessageInput />
             </div>
           )}
         </>

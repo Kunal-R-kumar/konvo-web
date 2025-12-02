@@ -20,7 +20,6 @@ const StatusHeader = () => {
           <p>activeStatus?.contact</p>
         </div>
       </div>
-      <button className="menu-btn">⋮</button>
     </div>
   );
 };
