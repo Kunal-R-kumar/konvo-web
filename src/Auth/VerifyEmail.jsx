@@ -32,7 +32,7 @@ const VerifyEmail = () => {
 
     try {
       // Delete user data in database
-      await remove(ref(db, `users/${user.uid}`));
+      await remove(ref(db, `Users/${user.uid}`));
 
       // Delete auth user
       await deleteUser(user);
@@ -65,7 +65,7 @@ const VerifyEmail = () => {
 
   return (
     <div className="central-card">
-      <h2 className="message">Verify Your Email To Continue 📩</h2>
+      <h2 className="verify-notice">Verify Your Email To Continue 📩</h2>
 
       <p className="verification_deletion_timer">
         {`⏳ Time Remaining: ${time}s`}

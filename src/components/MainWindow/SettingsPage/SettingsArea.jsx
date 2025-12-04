@@ -4,9 +4,9 @@ import EmojiBackground from "../../Doodle/EmojiBackground";
 import { UIContext } from "../../../context/UIContext";
 
 const SettingsArea = () => {
-  const { activeStatus, isMobile } = useContext(UIContext);
+  const { activeSettings, isMobile } = useContext(UIContext);
 
-  if (!activeStatus) {
+  if (!activeSettings) {
     return (
       <>
         {!isMobile && (
@@ -15,7 +15,7 @@ const SettingsArea = () => {
               bgUicolor="--wlbd-color"
               total_emojis={isMobile ? 80 : 140}
             />
-            <h1>Select a Setting First</h1>
+            <h1>Select a Setting First!!</h1>
           </div>
         )}
       </>
@@ -24,11 +24,14 @@ const SettingsArea = () => {
 
   return (
     <div className="right-section">
-      {/* <SettingsHeader /> */}
+      <SettingsHeader />
       <EmojiBackground
         bgUicolor="--wlbd-color"
         total_emojis={isMobile ? 80 : 140}
       />
+      <div className="developer-img">
+        <img src={activeStatus.s_pic} alt="" />
+      </div>
     </div>
   );
 };

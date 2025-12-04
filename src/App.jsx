@@ -23,7 +23,18 @@ const App = () => {
           {/* Main Chat Window - Protected Route */}
           <Route
             path="/"
-            element={user ? <MainWindow /> : <Navigate to="/setup" />}
+            element={
+              user ? (
+                (user.authProvider === "email" && user.emailVerified) ||
+                user.authProvider === "phone" ? (
+                  <MainWindow />
+                ) : (
+                  <Navigate to="/verify-email" />
+                )
+              ) : (
+                <Navigate to="/setup" />
+              )
+            }
           />
           <Route
             path="/chat"

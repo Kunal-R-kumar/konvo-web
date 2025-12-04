@@ -3,17 +3,17 @@ import { UIContext } from "../../../context/UIContext";
 import { IoIosArrowBack } from "react-icons/io";
 
 const SettingsHeader = () => {
-  const { activeStatus, setActiveStatus } = useContext(UIContext);
+  const { activeSettings, setActiveSettings } = useContext(UIContext);
   return (
     <div className="page-header">
       <div className="profile">
         <IoIosArrowBack
           className="back-btn"
-          onClick={() => setActiveStatus(null)}
+          onClick={() => setActiveSettings(null)}
         />
         <div className="settings-list-info">
-          <setting.Icon className="settings-list-info-icon" />
-          <span className="settings-list-info-name">{setting.name}</span>
+          <activeSettings.Icon className="settings-list-info-icon" />
+          <span className="settings-list-info-name">{activeSettings.name}</span>
         </div>
       </div>
     </div>
