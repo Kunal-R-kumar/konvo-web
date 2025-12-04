@@ -1,0 +1,11 @@
+.settings-list-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.settings-list-info-icon {
+  font-size: 24px;
+}
+.settings-list-info-name {
+  font-size: 20px;
+}

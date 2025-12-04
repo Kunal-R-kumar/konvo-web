@@ -9,12 +9,14 @@ import MainListNavbar from "./MainListNavbar";
 import StatusList from "./StatusPage/StatusList";
 import CallsPage from "./CallsPage/CallsPage";
 import ArchivePage from "./ArchivePage/ArchivePage";
-import SettingsPage from "./SettingsPage/SettingsPage";
+import SettingsArea from "./SettingsPage/SettingsArea";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import { UIContext } from "../../context/UIContext";
 
 import "./MainWindow.css";
 import ChatArea from "./ChatsPage/ChatArea";
+import StatusArea from "./StatusPage/StatusArea";
+import SettingsList from "./SettingsPage/SettingsList";
 const MainWindow = () => {
   const { activeChat, isMobile, activeTab, activeStatus } =
     useContext(UIContext);
@@ -27,26 +29,27 @@ const MainWindow = () => {
           {!isMobile && (
             <>
               <SideMenuBar />
-              <div className="chat-list-section">
+              <div className="left-section">
                 <MainListNavbar />
                 <ChatList />
               </div>
             </>
           )}
           {isMobile && !activeChat && (
-            <div className="chat-list-section">
+            <div className="left-section">
               <MainListNavbar />
               <ChatList />
               <SideMenuBar />
             </div>
           )}
-          {activeChat && (
+          <ChatArea />
+          {/* {activeChat && (
             <div className="chat-area-section">
               <ChatHeader />
               <Messages />
               <MessageInput />
             </div>
-          )}
+          )} */}
         </>
       )}
       {/* Status Tab */}
@@ -55,25 +58,20 @@ const MainWindow = () => {
           {!isMobile && (
             <>
               <SideMenuBar />
-              <div className="status-list-section">
+              <div className="left-section">
                 <MainListNavbar />
                 <StatusList />
               </div>
             </>
           )}
           {isMobile && !activeStatus && (
-            <div className="status-list-section">
+            <div className="left-section">
               <MainListNavbar />
               <StatusList />
               <SideMenuBar />
             </div>
           )}
-          {activeStatus && (
-            <div className="status-area-section">
-              <StatusHeader />
-              <Messages />
-            </div>
-          )}
+          <StatusArea />
         </>
       )}
       {/* Calls Tab */}
@@ -115,24 +113,27 @@ const MainWindow = () => {
         </>
       )}
       {/* Settings Tab */}
-      {activeTab === "Settings" && !isMobile && (
+      {activeTab === "Settings" && (
         <>
-          <SideMenuBar />
-          <div className="pages-section">
-            <MainListNavbar />
-            <SettingsPage />
-          </div>
+          {!isMobile && (
+            <>
+              <SideMenuBar />
+              <div className="left-section">
+                <MainListNavbar />
+                <SettingsList />
+              </div>
+            </>
+          )}
+          {isMobile && !activeStatus && (
+            <div className="left-section">
+              <MainListNavbar />
+              <SettingsList />
+              <SideMenuBar />
+            </div>
+          )}
+          <SettingsArea />
         </>
       )}
-      {activeTab === "Settings" && isMobile && (
-        <>
-          <div className="pages-section">
-            <MainListNavbar />
-            <SettingsPage />
-            <SideMenuBar />
-          </div>
-        </>
-      )}{" "}
       {/* Profile Tab */}
       {activeTab === "Profile" && !isMobile && (
         <>

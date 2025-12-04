@@ -7,7 +7,8 @@ import Setup from "./Auth/Setup";
 import MainWindow from "./components/MainWindow/MainWindow";
 import EmojiBackground from "./components/Doodle/EmojiBackground";
 import ForgetPassword from "./Auth/ForgetPassword";
-import { ToastContainer } from "react-toastify";
+import VerifyEmail from "./Auth/VerifyEmail";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -24,13 +25,27 @@ const App = () => {
             path="/"
             element={user ? <MainWindow /> : <Navigate to="/setup" />}
           />
+          <Route
+            path="/chat"
+            element={user ? <MainWindow /> : <Navigate to="/setup" />}
+          />
           {/* Setup Page - Redirect if already logged in */}
           <Route
             path="/setup"
-            element={!user ? <Setup /> : <Navigate to="/" />}
+            element={
+              !user ? (
+                <Setup />
+              ) : (
+                <>
+                  {/* {toast.info("Already logged in")} */}
+                  <Navigate to="/" />
+                </>
+              )
+            }
           />
           {/* Forget Password */}
           <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
           {/* Optional: Catch-all redirect */}
           <Route path="*" element={<Navigate to={user ? "/" : "/setup"} />} />
         </Routes>

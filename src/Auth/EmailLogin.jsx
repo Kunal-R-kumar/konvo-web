@@ -4,10 +4,13 @@ import { auth } from "../Firebase/firebase";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaRegEye } from "react-icons/fa";
+import { GrFormViewHide } from "react-icons/gr";
 
 const EmailLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [is_visible_password, setvisible_password] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -61,13 +64,24 @@ const EmailLogin = () => {
         disabled={loading}
       />
 
-      <input
-        type="password"
-        placeholder="Enter Password Here"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        disabled={loading}
-      />
+      <div className="password-group">
+        <input
+          type={!is_visible_password ? "password" : "text"}
+          placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <span
+          className="eye-icon"
+          onClick={() => setvisible_password(!is_visible_password)}
+        >
+          {!is_visible_password ? (
+            <FaRegEye className="actual_eye_icon" />
+          ) : (
+            <GrFormViewHide className="actual_eye_icon" />
+          )}
+        </span>
+      </div>
 
       <button type="submit" disabled={loading}>
         {loading ? "Logging in..." : "Login"}

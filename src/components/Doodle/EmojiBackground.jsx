@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./EmojiBackground.css";
-const EmojiBackground = (total = 80, emojiType = 1) => {
+const EmojiBackground = ({
+  total_emojis = 140,
+  emojiType = 1,
+  bgUicolor = "--bg-color",
+}) => {
   const [emojis, setEmojis] = useState([]);
   const emojiSet = [
     "😄",
@@ -31,7 +35,8 @@ const EmojiBackground = (total = 80, emojiType = 1) => {
   ];
 
   const emojiSize = 30;
-  const TOTAL = 140;
+  const TOTAL = total_emojis;
+  // const TOTAL = 140;
 
   const generateEmojiPositions = () => {
     const placed = [];
@@ -78,7 +83,7 @@ const EmojiBackground = (total = 80, emojiType = 1) => {
   }, []);
 
   return (
-    <div className="emoji-bg">
+    <div className="emoji-bg" style={{ backgroundColor: `var(${bgUicolor})` }}>
       {emojis.map((e) => (
         <span
           key={e.id}

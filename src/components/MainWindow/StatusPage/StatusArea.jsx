@@ -1,36 +1,51 @@
 import React, { useContext, useEffect, useRef } from "react";
 import StatusHeader from "./StatusHeader";
+import EmojiBackground from "../../Doodle/EmojiBackground";
 import { UIContext } from "../../../context/UIContext";
-// import ScrollControls from "../ScrollControls";
 
 const StatusArea = () => {
-  const { activeStatus } = useContext(UIContext);
-  // const scrollContainerRef = useRef(null);
+  const { activeStatus, isMobile } = useContext(UIContext);
   if (!activeStatus) {
     return (
-      <div className="status-area-section">
-        <p>Select a chat to start messaging</p>
-      </div>
+      <>
+        {!isMobile && (
+          <div className="empty-msg">
+            <EmojiBackground
+              bgUicolor="--wlbd-color"
+              total_emojis={isMobile ? 80 : 140}
+            />
+            <h1>Select a User to see their Status</h1>
+          </div>
+        )}
+      </>
     );
   }
 
   return (
-    <div className="status-area-section">
-      {/* Chat Header */}
+    <div className="right-section">
       <StatusHeader />
-
-      {/* Messages container */}
-      {/* <div className="messages" ref={scrollContainerRef}> */}
-      {/* <div className="messages">
-        <Messages />
-        <div ref={messagesEndRef}></div>
-      </div> */}
-
-      {/* Scroll buttons */}
-      {/* <ScrollControls scrollContainerRef={scrollContainerRef} /> */}
-
-      {/* Message Input */}
-      {/* <MessageInput /> */}
+      <EmojiBackground
+        bgUicolor="--wlbd-color"
+        total_emojis={isMobile ? 80 : 140}
+      />
+      {activeStatus.name == "Kunal" && (
+        <div className="developer-msg">
+          <h1>Hi, I am Kunal Developer & Owner of Konvo </h1>
+          <h3>
+            The thing you are viewing is just a preview where the status Will be
+            shown for now u can just see how Status will be shown{" "}
+          </h3>
+          <h3>
+            The feature to upload status is under development and will be rolled
+            out soon
+          </h3>
+        </div>
+      )}
+      {activeStatus.name != "Kunal" && (
+        <div className="developer-img">
+          <img src={activeStatus.s_pic} alt="" />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 /* Default (light) theme */
-@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playwrite+TZ:wght@100..400&family=Ruluko&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playwrite+TZ:wght@100..400&family=Ruluko&display=swap");
 /* from index.css */
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -23,39 +23,42 @@
   --text-color: #000000;
   --message-sent-bg: #dcf8c6;
   --message-received-bg: #ffffff;
-  --message-date:#b1e3ff;
+  --message-date: #b1e3ff;
   --navbar-bg: #ffffff;
   --shadow-color: rgba(0, 0, 0, 0.35);
   --font-stylish-normal: "Ruluko", sans-serif;
-  --font-stylish-cursive: cursive;
-  --font-shorthand-stylish-cursive: normal 400 16px/1.4 "Playwrite US Trad",  --link-color: #306dd6;
+  --font-stylish-cursive: "Comic Sans MS", "Comic Sans", "Ruluko", cursive;
+  --font-shorthand-stylish-cursive: normal 400 16px/1.4 "Playwrite US Trad";
+  --link-color: #306dd6;
   --button-color: #128c7e;
   --button-hover-color: #075e54;
   --wlbd-color: #ffffff;
   --blwd-color: #000000;
   --side-menubar-color: #f6f9ff;
   --chatlist-color: #ffffff;
-  --chatlist-hover-bg:#f6f5f4;
-  --activated-color:#e5ddd5;
-  /* --chatlist-hover-bg:#f3f3f3; */
+  --chatlist-hover-bg: #f6f5f4;
+  --activated-color: #e5ddd5;
+  --status-header-color: #f6f9ff21;
+  --danger-color: #ff2525;
 
+  /* --chatlist-hover-bg:#f3f3f3; */
 }
 
 /* Dark theme */
 [data-theme="dark"] {
-  --base-color:#128c7e;
+  --base-color: #128c7e;
   --bg-color: #111b21;
   --sidebar-bg: #202c33;
   --chat-bg: #131c21;
   --text-color: #e5ddd5;
   --message-sent-bg: #056162;
   --message-received-bg: #262d31;
-  --message-date:#0c5b87;
+  --message-date: #0c5b87;
   --navbar-bg: #202c33;
   --shadow-color: rgb(169 169 169 / 22%);
   --font-stylish-normal: "Ruluko", sans-serif;
-  --font-stylish-cursive: cursive;
-  --font-shorthand-stylish-cursive: normal 400 16px/1.4 "Playwrite TZ",cursive;
+  --font-stylish-cursive: "Comic Sans MS", "Comic Sans", "Ruluko", cursive;
+  --font-shorthand-stylish-cursive: normal 400 16px/1.4 "Playwrite TZ", cursive;
   --link-color: #95bcff;
   --button-color: #128c7e;
   --button-hover-color: #075e54;
@@ -63,9 +66,11 @@
   --blwd-color: #ffffff;
   --side-menubar-color: #0e1418;
   --chatlist-color: #ffffff;
-  --chatlist-hover-bg:#131b1f;
-  --activated-color:#e5ddd5;
-
+  --chatlist-hover-bg: #131b1f;
+  --activated-color: #e5ddd5;
+  --status-header-color: #01010121;
+  --danger-color: #ff2525;
+  /* --image-border-color */
 }
 
 /* Apply variables */
