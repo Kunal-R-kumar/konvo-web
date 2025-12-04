@@ -1,71 +1,97 @@
-// 📌 VerifyEmail.jsx
 import React, { useEffect, useState } from "react";
 import { IoRefreshOutline } from "react-icons/io5";
 import { auth, db } from "../Firebase/firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ref, remove } from "firebase/database";
-import { deleteUser } from "firebase/auth";
+import { deleteUser, sendEmailVerification } from "firebase/auth";
 
 const VerifyEmail = () => {
   const [time, setTime] = useState(60);
   const [loading, setLoading] = useState(false);
+  const [resendDisabled, setResendDisabled] = useState(false);
   const navigate = useNavigate();
 
-  // ⏱ Countdown timer
+  // 1️⃣ Timer countdown
   useEffect(() => {
     if (time <= 0) {
-      handleTimeoutDelete(); // When time ends, delete user & data automatically
+      handleTimeoutDelete();
       return;
     }
-    const interval = setInterval(() => {
+
+    const timer = setInterval(() => {
       setTime((prev) => prev - 1);
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, [time]);
 
-  // 🔥 Delete user when timer finishes
+  // 2️⃣ Auto check verification every 3 seconds
+  useEffect(() => {
+    const checkInterval = setInterval(() => {
+      checkVerification();
+    }, 3000);
+
+    return () => clearInterval(checkInterval);
+  }, []);
+
+  const checkVerification = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    await user.reload(); // Refresh latest info
+
+    if (user.emailVerified) {
+      toast.success("Email Verified 🎉 Redirecting...");
+      navigate("/");
+    }
+  };
+
+  // 3️⃣ Delete user if not verified in time
   const handleTimeoutDelete = async () => {
     const user = auth.currentUser;
     if (!user) return;
 
     try {
-      // Delete user data in database
       await remove(ref(db, `Users/${user.uid}`));
-
-      // Delete auth user
       await deleteUser(user);
-
-      toast.error("Email not verified in time. User removed ❌");
-
-      navigate("/"); // back to login screen
-    } catch (error) {
-      toast.error("Error while deleting user.");
-      console.error(error);
+      toast.error("Email not verified in time. User deleted ❌");
+      navigate("/setup");
+    } catch (err) {
+      console.error(err);
+      toast.error("Error deleting user");
     }
   };
 
-  // 🔄 Refresh check
+  // 🔄 Manual refresh button
   const handleRefresh = async () => {
     setLoading(true);
-
-    await auth.currentUser.reload();
-    const user = auth.currentUser;
-
-    if (user && user.emailVerified) {
-      toast.success("Email Verified Successfully 🎉");
-      navigate("/chat");
-    } else {
-      toast.info("Still not verified. Check your inbox 📩");
-    }
-
+    await checkVerification();
     setLoading(false);
+  };
+
+  // 📩 Resend Email
+  const handleResendVerification = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      await sendEmailVerification(user);
+      toast.success("Verification Email Resent 📩");
+
+      setResendDisabled(true);
+      setTimeout(() => setResendDisabled(false), 10000); // enable after 10s
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to resend verification email");
+    }
   };
 
   return (
     <div className="central-card">
       <h2 className="verify-notice">Verify Your Email To Continue 📩</h2>
+
+      <p>Email sent at: {auth.currentUser?.email}</p>
 
       <p className="verification_deletion_timer">
         {`⏳ Time Remaining: ${time}s`}
@@ -78,6 +104,15 @@ const VerifyEmail = () => {
       >
         {loading ? "Checking..." : "Refresh"}
         <IoRefreshOutline style={{ marginLeft: 6 }} />
+      </button>
+
+      <button
+        style={{ marginTop: 10 }}
+        className="refresh_button"
+        disabled={resendDisabled || time <= 0}
+        onClick={handleResendVerification}
+      >
+        {resendDisabled ? "Wait..." : "Resend Email"}
       </button>
     </div>
   );

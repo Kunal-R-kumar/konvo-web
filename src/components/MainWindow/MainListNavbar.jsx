@@ -1,3 +1,9 @@
+import { signOut } from "firebase/auth";
+import { auth } from "../../Firebase/firebase";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { MdLogout } from "react-icons/md";
+
 import { MdInvertColors } from "react-icons/md";
 import { useState } from "react";
 const MainListNavbar = () => {
@@ -5,6 +11,15 @@ const MainListNavbar = () => {
 
   const handleInversion = () => {
     setInverted(!inverted);
+  };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      toast.error("Error during logout!");
+      console.error(error);
+    }
   };
   return (
     <div className="chatlist-navbar">
@@ -17,7 +32,9 @@ const MainListNavbar = () => {
           className={!inverted ? "theme-btn" : "theme-btn inverted"}
           onClick={handleInversion}
         />
-        <button className="menu-btn">⋮</button>
+        <button className="menu-btn" onClick={handleLogout}>
+          <MdLogout />
+        </button>
       </div>
     </div>
   );

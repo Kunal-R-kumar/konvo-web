@@ -24,15 +24,12 @@ const App = () => {
           <Route
             path="/"
             element={
-              user ? (
-                (user.authProvider === "email" && user.emailVerified) ||
-                user.authProvider === "phone" ? (
-                  <MainWindow />
-                ) : (
-                  <Navigate to="/verify-email" />
-                )
-              ) : (
+              !user ? (
                 <Navigate to="/setup" />
+              ) : user.authProvider === "phone" || user.emailVerified ? (
+                <MainWindow />
+              ) : (
+                <Navigate to="/verify-email" />
               )
             }
           />
