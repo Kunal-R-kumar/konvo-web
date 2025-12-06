@@ -34,9 +34,7 @@ const MainListNavbar = () => {
           className={!inverted ? "theme-btn" : "theme-btn inverted"}
           onClick={handleInversion}
         />
-        <button className="menu-btn" onClick={handleLogout}>
-          <MdLogout />
-        </button>
+        <MdLogout className="menu-btn" onClick={handleLogout} />
       </div>
     </div>
   );
