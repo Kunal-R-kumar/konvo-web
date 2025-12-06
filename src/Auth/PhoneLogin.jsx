@@ -4,27 +4,30 @@ import "react-phone-input-2/lib/style.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { signInWithCustomToken } from "firebase/auth";
-import { auth } from "../Firebase/firebase";
+import { auth, db } from "../Firebase/firebase";
+import { ref, set } from "firebase/database";
+
 const PhoneLogin = () => {
   const ip_and_port = "https://backend-bxhi.onrender.com";
-  const [step, setStep] = useState(1); // 1: enter phone, 2: enter OTP
+
+  const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]); // 6-digit OTP
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+
   const otpInputsRef = useRef([]);
   const navigate = useNavigate();
-  // ensure refs array length
+
   otpInputsRef.current = Array(6)
     .fill()
     .map((_, i) => otpInputsRef.current[i] || React.createRef());
 
   useEffect(() => {
     if (step === 2) {
-      // focus first empty input when OTP step opens
       const firstEmptyIndex = otp.findIndex((d) => d === "");
       const idx = firstEmptyIndex === -1 ? 5 : firstEmptyIndex;
       otpInputsRef.current[idx].current.focus();
     }
-  }, [step]); // run when step changes
+  }, [step]);
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -68,8 +71,17 @@ const PhoneLogin = () => {
       if (res.ok) {
         toast.success("Login successful!");
 
-        const customToken = data.token;
-        await signInWithCustomToken(auth, customToken);
+        const result = await signInWithCustomToken(auth, data.token);
+        const user = result.user;
+
+        // 🔥 Store user in Realtime DB (safe set)
+        await set(ref(db, "Users/" + user.uid), {
+          uid: user.uid,
+          contactType: "phone",
+          contact: `+${phone}`,
+          createdAt: Date.now(),
+          name: `+${phone}`,
+        });
 
         navigate("/");
       } else {
@@ -85,25 +97,18 @@ const PhoneLogin = () => {
     e.preventDefault();
     const code = otp.join("");
     if (code.length < 6) return;
-    console.log("OTP entered:", code);
     verifyotp(`${code}`);
   };
 
   const handleChange = (e, index) => {
     const val = e.target.value.replace(/[^0-9]/g, "");
-    if (!val && otp[index] === "") {
-      // nothing changed
-      return;
-    }
+    const newOtp = [...otp];
 
-    // If user pasted full OTP (more than 1 char), fill all inputs
     if (val.length > 1) {
       const chars = val.split("").slice(0, 6);
-      const newOtp = [...otp];
       for (let i = 0; i < chars.length; i++) {
         newOtp[index + i] = chars[i];
-        const ref = otpInputsRef.current[index + i];
-        if (ref && ref.current) ref.current.value = chars[i];
+        otpInputsRef.current[index + i].current.value = chars[i];
       }
       setOtp(newOtp);
       const nextPos = Math.min(index + val.length, 5);
@@ -111,46 +116,38 @@ const PhoneLogin = () => {
       return;
     }
 
-    const newOtp = [...otp];
     newOtp[index] = val;
     setOtp(newOtp);
 
     if (val && index < 5) {
-      // move focus to next
       otpInputsRef.current[index + 1].current.focus();
     }
   };
 
   const handleKeyDown = (e, index) => {
-    const key = e.key;
-
-    if (key === "Backspace") {
-      e.preventDefault(); // we manage deletion manually
+    if (e.key === "Backspace") {
+      e.preventDefault();
       const newOtp = [...otp];
 
       if (otp[index]) {
-        // If current has a value, clear it and stay
         newOtp[index] = "";
         setOtp(newOtp);
-        // clear the input element value as well
         otpInputsRef.current[index].current.value = "";
         return;
       }
 
-      // current empty → move to previous and clear it
       if (index > 0) {
         otpInputsRef.current[index - 1].current.focus();
         newOtp[index - 1] = "";
         setOtp(newOtp);
         otpInputsRef.current[index - 1].current.value = "";
       }
-    } else if (key === "ArrowLeft") {
-      if (index > 0) otpInputsRef.current[index - 1].current.focus();
-    } else if (key === "ArrowRight") {
-      if (index < 5) otpInputsRef.current[index + 1].current.focus();
-    } else if (key === "Enter") {
-      // optional: submit when last box and Enter pressed
-      if (index === 5) handleVerifyOtp(e);
+    } else if (e.key === "ArrowLeft" && index > 0) {
+      otpInputsRef.current[index - 1].current.focus();
+    } else if (e.key === "ArrowRight" && index < 5) {
+      otpInputsRef.current[index + 1].current.focus();
+    } else if (e.key === "Enter" && index === 5) {
+      handleVerifyOtp(e);
     }
   };
 
@@ -163,8 +160,7 @@ const PhoneLogin = () => {
     const newOtp = [...otp];
     for (let i = 0; i < digits.length; i++) {
       newOtp[index + i] = digits[i];
-      const ref = otpInputsRef.current[index + i];
-      if (ref && ref.current) ref.current.value = digits[i];
+      otpInputsRef.current[index + i].current.value = digits[i];
     }
     setOtp(newOtp);
     const nextPos = Math.min(index + digits.length, 5);
@@ -186,11 +182,13 @@ const PhoneLogin = () => {
               borderRadius: "5px",
             }}
           />
+
           <button type="submit">Send OTP</button>
         </form>
       ) : (
         <form onSubmit={handleVerifyOtp} className="otp-form">
-          <p>Enter OTP sent to {phone}</p>
+          <p>Enter OTP sent to +{phone}</p>
+
           <div className="otp-inputs">
             {otp.map((digit, index) => (
               <input
@@ -198,13 +196,10 @@ const PhoneLogin = () => {
                 ref={otpInputsRef.current[index]}
                 type="text"
                 inputMode="numeric"
-                pattern="[0-9]*"
                 maxLength="1"
-                defaultValue={digit}
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onPaste={(e) => handlePaste(e, index)}
-                id={`otp-${index}`}
                 style={{
                   width: 44,
                   height: 44,
@@ -224,18 +219,22 @@ const PhoneLogin = () => {
             }}
           >
             <button type="submit">Verify OTP</button>
+
             <button
               type="button"
               onClick={() => {
                 setStep(1);
                 setOtp(["", "", "", "", "", ""]);
-                otpInputsRef.current.forEach((r) => {
-                  if (r && r.current) r.current.value = "";
-                });
+                otpInputsRef.current.forEach((r) =>
+                  r.current ? (r.current.value = "") : null
+                );
               }}
             >
               Edit Phone
             </button>
+            {
+              "Due to limited sms fascility the sms services ae suspended for a short period of time "
+            }
           </div>
         </form>
       )}

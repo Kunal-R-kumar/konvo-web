@@ -21,20 +21,22 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Main Chat Window - Protected Route */}
-          <Route
+          {/* <Route
             path="/"
             element={
               !user ? (
                 <Navigate to="/setup" />
-              ) : user.authProvider === "phone" || user.emailVerified ? (
+              ) : user.providerData[0]?.providerId === "phone" ||
+                user.emailVerified ? (
                 <MainWindow />
               ) : (
                 <Navigate to="/verify-email" />
               )
             }
-          />
+          /> */}
+
           <Route
-            path="/chat"
+            path="/"
             element={user ? <MainWindow /> : <Navigate to="/setup" />}
           />
           {/* Setup Page - Redirect if already logged in */}

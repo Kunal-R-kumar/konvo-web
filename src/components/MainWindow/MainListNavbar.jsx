@@ -11,6 +11,7 @@ const MainListNavbar = () => {
 
   const handleInversion = () => {
     setInverted(!inverted);
+    console.log(auth.currentUser.providerData[0]);
   };
   const handleLogout = async () => {
     try {

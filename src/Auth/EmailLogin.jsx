@@ -47,7 +47,7 @@ const EmailLogin = () => {
           toast.error("Invalid email format!");
           break;
         default:
-          toast.error("Something went wrong! Try again.");
+          toast.error(`${error.code}! Try again.`);
       }
     } finally {
       setLoading(false);

@@ -63,12 +63,11 @@ const EmailSignup = () => {
         imageUrl: "k_konvo_null",
         contactType: "email",
         contact: email,
-        emailVerified: false,
         createdAt: new Date().toISOString(),
       });
 
       toast.success("Account Created!");
-      navigate("/verify-email");
+      // navigate("/verify-email");
     } catch (error) {
       toast.error(error.message);
     } finally {
