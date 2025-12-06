@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { signInWithCustomToken } from "firebase/auth";
 import { auth, db } from "../Firebase/firebase";
-import { ref, set } from "firebase/database";
+import { ref, set, get, child } from "firebase/database";
 
 const PhoneLogin = () => {
-  const ip_and_port = "https://backend-bxhi.onrender.com";
+  // const ip_and_port = "https://backend-bxhi.onrender.com";
+  const ip_and_port = "http://localhost:5000"; //for backend testing
 
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
@@ -36,6 +37,7 @@ const PhoneLogin = () => {
       toast.error("Phone number required!");
       return;
     }
+    console.log(phone);
 
     try {
       const res = await fetch(`${ip_and_port}/send-otp`, {
@@ -74,15 +76,19 @@ const PhoneLogin = () => {
         const result = await signInWithCustomToken(auth, data.token);
         const user = result.user;
 
-        // 🔥 Store user in Realtime DB (safe set)
-        await set(ref(db, "Users/" + user.uid), {
-          uid: user.uid,
-          contactType: "phone",
-          contact: `+${phone}`,
-          createdAt: Date.now(),
-          name: `+${phone}`,
-        });
+        const snapshot = await get(child(ref(db), `Users/${user.uid}`));
 
+        // 🔥 Store user in Realtime DB (safe set)
+        if (!snapshot.exists()) {
+          await set(ref(db, "Users/" + user.uid), {
+            uid: user.uid,
+            contactType: "phone",
+            imageUrl: "k_konvo_null",
+            contact: `+${phone}`,
+            createdAt: Date.now(),
+            name: `+${phone}`,
+          });
+        }
         navigate("/");
       } else {
         toast.error(data.message || "Invalid OTP");
@@ -232,9 +238,6 @@ const PhoneLogin = () => {
             >
               Edit Phone
             </button>
-            {
-              "Due to limited sms fascility the sms services ae suspended for a short period of time "
-            }
           </div>
         </form>
       )}
