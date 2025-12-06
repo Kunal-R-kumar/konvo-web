@@ -9,6 +9,17 @@ export const UIProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState("Chats");
 
+  // ⭐ NEW — Theme State (dark / light)
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark"; // load saved theme ⭐ NEW
+  });
+
+  // ⭐ NEW — Apply theme to <html> attribute dynamically
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme); // Save to localStorage ⭐ NEW
+  }, [theme]);
+
   // Check screen size for mobile layout
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768);
@@ -61,6 +72,8 @@ export const UIProvider = ({ children }) => {
         setActiveStatus,
         activeSettings,
         setActiveSettings,
+        theme, // ⭐ NEW
+        setTheme, // ⭐ NEW
       }}
     >
       {children}

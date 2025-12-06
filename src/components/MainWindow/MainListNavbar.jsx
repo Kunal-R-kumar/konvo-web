@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 
 import { MdInvertColors } from "react-icons/md";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UIContext } from "../../context/UIContext";
 const MainListNavbar = () => {
+  const { theme, setTheme } = useContext(UIContext);
   const [inverted, setInverted] = useState(false);
-
   const handleInversion = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
     setInverted(!inverted);
-    console.log(auth.currentUser.providerData[0]);
   };
   const handleLogout = async () => {
     try {
