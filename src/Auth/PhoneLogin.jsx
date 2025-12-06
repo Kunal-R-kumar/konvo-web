@@ -8,8 +8,8 @@ import { auth, db } from "../Firebase/firebase";
 import { ref, set, get, child } from "firebase/database";
 
 const PhoneLogin = () => {
-  // const ip_and_port = "https://backend-bxhi.onrender.com";
-  const ip_and_port = "http://localhost:5000"; //for backend testing
+  const ip_and_port = "https://backend-bxhi.onrender.com"; //live backend
+  // const ip_and_port = "http://localhost:5000"; //for  testing backend
 
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
